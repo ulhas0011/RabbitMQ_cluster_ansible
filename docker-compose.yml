@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  rabbitmq:
+    image: rabbitmq:3.13.7-management
+    hostname: {{ inventory_hostname }}
+    container_name: rabbitmq
+    volumes:
+      - ./erlang.cookie:/var/lib/rabbitmq/.erlang.cookie
+      - ./data:/var/lib/rabbitmq
+    network_mode: "host"
