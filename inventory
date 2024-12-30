@@ -1,0 +1,5 @@
+[servers] #group name
+
+#use private ip's of instances
+rabbit1 ansible_host=172.31.6.173
+rabbit2 ansible_host=172.31.14.94
