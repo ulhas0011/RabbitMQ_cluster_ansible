@@ -3,6 +3,13 @@
   hosts: servers  # group name in your inventory file
   become: true    # for root access if required
   tasks:
+    - name: Add all servers' IPs and hostnames to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ hostvars[item]['ansible_host'] }} {{ item }}"
+        state: present
+      with_items: "{{ groups['servers'] }}"
+
     - name: Ensure dependencies (ca-certificates, curl) are installed
       apt:
         name:
@@ -43,11 +50,7 @@
         mode: '0600'
 
 
-    - name: Pull RabbitMQ image
-      docker_image:
-        name: rabbitmq
-        tag: "3.13.7-management"
-        source: pull
-
     - name: Ensure RabbitMQ container is running
-      shell: sudo docker compose up -d
+      community.docker.docker_compose_v2:
+        project_src: /home/ubuntu/
+        state: present
