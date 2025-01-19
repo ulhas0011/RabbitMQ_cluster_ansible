@@ -1,10 +1,11 @@
-version: '3.9'
+version: '3.8'
 services:
   rabbitmq:
-    image: rabbitmq:3.13.7-management
+    image: rabbitmq:4.0-management
     hostname: {{ inventory_hostname }}
     container_name: rabbitmq
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=294DZM3HDoLMid6  # Set your Erlang cookie here
     volumes:
-      - ./erlang.cookie:/var/lib/rabbitmq/.erlang.cookie
       - ./data:/var/lib/rabbitmq
     network_mode: "host"
